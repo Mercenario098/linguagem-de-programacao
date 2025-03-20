@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1742072140 source:c:\users\lucas caldas\documents\github\linguagem-de-programacao\aula c\main.c
+	<stdio.h>
+	<stdlib.h>
+	<locale.h>
+
