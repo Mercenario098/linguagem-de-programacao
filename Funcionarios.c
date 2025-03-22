@@ -15,17 +15,12 @@ int main(){
             printf("%d° Funcionario!", i+1);
             printf("\nQual o Seu salario: ");
             scanf("%f", &salario[i]);
-
+            printf("Qual a sua idade: ");
+            scanf("%d", &idade[i]);
             printf("Qual o seu sexo (1)Feminino (2)Masculino: ");
             scanf("%d", &sexo[i]);
             printf("Estado Civil (1)Casado (2)Solteiro: ");
             scanf("%d", &estadoCivil[i]);
-            if(estadoCivil[i] == 2){
-                if(sexo[i] == 1){
-
-                }
-            }
-
             printf("Tem filhos (1)Sim (2)Não: ");
             scanf("%d", &filho);
             if(filho == 1){
