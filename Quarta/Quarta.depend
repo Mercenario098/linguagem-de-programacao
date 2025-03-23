@@ -1,6 +1,0 @@
-# depslib dependency file v1.0
-1742429490 source:c:\users\lucas caldas\documents\github\linguagem-de-programacao\quarta\main.c
-	<stdio.h>
-	<stdlib.h>
-	<locale.h>
-
