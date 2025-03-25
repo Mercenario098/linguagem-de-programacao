@@ -9,6 +9,8 @@ int main(){
  int qtdfilhos[10];
  int estadocivil[10];
 
+ print("teste MAri");
+
  for(int i = 0; i < 10; i++){
     printf("digite o valor do seu salario: ");
     scanf("%f", &salario[i]);
