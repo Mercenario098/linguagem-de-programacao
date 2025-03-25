@@ -6,7 +6,7 @@ int main(){
     setlocale(LC_ALL, "Portuguese_Brazil");
     int size = 10;
     int sexo[size], idade[size], qtdfilhos[size], estadoCivil[size];
-    int filho = 0;
+    int filho = 0, feminino = 0, masculino = 0;
     float salario[size];
     float salarioMedioPaisIdososSolteiro = 0;
 
@@ -23,9 +23,16 @@ int main(){
             scanf("%d", &estadoCivil[i]);
             printf("Tem filhos (1)Sim (2)Não: ");
             scanf("%d", &filho);
+
             if(filho == 1){
                 printf("Quantos Filhos: ");
                 scanf("%d", &qtdfilhos[i]);
+                if(sexo[i] == 1){
+                        feminino++;
+                }
+                else if(sexo[i] == 2){
+                    masculino++;
+                }
             }
             else{
             }
