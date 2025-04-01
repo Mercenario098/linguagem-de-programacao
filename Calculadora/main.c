@@ -43,8 +43,6 @@ int main(){
         printf("\n4 - dividir");
         printf("\n5 - Sair");
         printf("\nEscolha uma das opções: ");
-        scanf("%d", opcao);
-
         scanf("%d", &opcao);
         if(opcao == 1){
             resultado = somar(numero1, numero2);
