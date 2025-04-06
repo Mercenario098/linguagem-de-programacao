@@ -31,6 +31,7 @@ typedef struct {
 }Venda;
 
 
+
 void cadastrarCliente (Cliente c[]) {
 
     for(int i=0; i < TAMCli; i++) {
@@ -39,6 +40,26 @@ void cadastrarCliente (Cliente c[]) {
         scanf("%s", c[i].nome );
 
         c[i].id = i+1;
+    }
+}
+
+void realizarVenda(Venda v[]){
+
+    for(int i = 0; i < TAMCli; i++){
+        printf("\nProduto: ");
+        scanf("%i", &v[i].idProduto);
+        printf("Quantidade: ");
+        scanf("%i", &v[i].quantProduto);
+
+        v[i].quantProduto = (v[i].idProduto * v[i].quantProduto);
+    }
+}
+
+void consultarVenda(Venda v[]){
+    for(int i = 0; i < TAMCli; i++){
+        printf("\nProduto: %i", v[i].idProduto);
+        printf("Quantidade: %i", v[i].quantProduto);
+        printf("Valor da Venda: %f", v[i].valorTotal);
     }
 }
 
@@ -83,11 +104,14 @@ void consultarProduto (Produto p[]) {
 
 
 
+
+
 int main() {
 
     int opcao, sair=0; // sair inicialmente falso
     Cliente clientes[5];
     Produto produtos[5];
+    Venda vendas[5];
 
     do {
         printf("\n\n>>>> Sistema de Vendas <<<< ");
@@ -95,7 +119,9 @@ int main() {
         printf("\n\t2 - Cadastrar Produtos");
         printf("\n\t3 - Consultar Clientes");
         printf("\n\t4 - Consultar Produtos");
-        printf("\n\t5 - Sair\n\t>>>> ");
+        printf("\n\t5 - Realizar Vendas");
+        printf("\n\t6 - Consultar Vendas");
+        printf("\n\t7 - Sair\n\t>>>> ");
 
         scanf("%d", &opcao);
 
@@ -112,6 +138,12 @@ int main() {
             consultarProduto(&produtos);
 
         } else if ( opcao == 5 ) {
+            realizarVenda(&vendas);
+
+        } else if ( opcao == 6 ) {
+            consultarVenda(&vendas);
+
+        } else if ( opcao == 7 ) {
             sair = 1;
 
         } else {
