@@ -44,20 +44,17 @@ int main(){
         printf("\n5 - Sair");
         printf("\nEscolha uma das opções: ");
         scanf("%d", &opcao);
-        if(opcao == 1){
+        switch(opcao){
+        case 1:
             resultado = somar(numero1, numero2);
-        }
-        else if(opcao == 2){
+        case 2:
             resultado = subtrair(numero1, numero2);
-        }
-        else if(opcao == 3){
+        case 3:
             resultado = multiplicar(numero1, numero2);
-        }
-        else if(opcao == 4){
+        case 4:
             resultado = dividir(numero1, numero2);
-        }
-        else if(opcao == 5){
-            continuar = 0 ;
+        case 5:
+            break;
         }
         printf("Resulta = %.2f", resultado);
     }

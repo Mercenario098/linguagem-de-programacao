@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1743543952 source:c:\users\lucas caldas\documents\github\linguagem-de-programacao\rotacionar um vetor\main.c
+	<stdio.h>
+	<stdlib.h>
+	<limits.h>
+
