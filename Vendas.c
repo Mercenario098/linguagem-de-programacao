@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <string.h>
+#include <ctype.h>
 #define TAMCli 3
 #define TAMProd 3
 
@@ -17,7 +19,7 @@ typedef struct {
 
 typedef struct {
 
-    int id;
+    int cpf;
     char nome[20];
 }Cliente;
 
@@ -31,14 +33,32 @@ typedef struct {
 }Venda;
 
 
+int validarCPF(const int *str){
+    if(strlen(str) != 11){
+        return 0;
+    }
+    for(int i = 0; i < 11; i++){
+        if(strlen(str[i])){
+            return 0;
+        }
+    }
+    return 1;
+}
 void cadastrarCliente (Cliente c[]) {
 
     for(int i=0; i < TAMCli; i++) {
 
         printf("Cliente %d, Primeiro Nome: ", i+1);
         scanf("%s", c[i].nome );
+        printf("CPF: ");
+        scanf("%i", &c[i].cpf );
 
-        c[i].id = i+1;
+        do{
+        if(validarCPF(c[i].cpf)){
+            printf("CPF Inválido!");
+        }
+        }
+        while(validarCPF(c[i].cpf) != 1);
     }
 }
 
@@ -93,7 +113,7 @@ void cadastrarProduto (Produto p[]) {
 void consultarCliente (Cliente *c) {
 
     for(int i=0; i < TAMCli; i++) {
-        printf("\nId Cliente: %d.",  c[i].id);
+        printf("\nCPF Cliente: %d.",  c[i].cpf);
         printf("\nPrimeiro Nome: %s.",  c[i].nome);
     }
 
