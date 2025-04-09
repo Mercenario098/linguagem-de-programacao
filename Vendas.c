@@ -3,9 +3,7 @@
 #include <locale.h>
 #include <string.h>
 #include <ctype.h>
-#define TAMCli 3
-#define TAMProd 3
-
+#define TAM 4
 
 
 typedef struct {
@@ -16,58 +14,61 @@ typedef struct {
     float valor;
 }Produto;
 
-
 typedef struct {
 
-    int cpf;
+    char cpf[12];
     char nome[20];
 }Cliente;
 
-
 typedef struct {
 
-    int idCliente;
+    int cpfCliente;
     int idProduto;
     int quantProduto;
     float valorTotal;
 }Venda;
 
+int validarCPF(const char *cpf) {
 
-int validarCPF(const int *str){
-    if(strlen(str) != 11){
+    if (strlen(cpf) != 11) {
         return 0;
     }
-    for(int i = 0; i < 11; i++){
-        if(strlen(str[i])){
+
+    for (int i = 0; i < 11; i++) {
+        if (!isdigit(cpf[i])) {
             return 0;
         }
     }
+
     return 1;
 }
+
 void cadastrarCliente (Cliente c[]) {
 
-    for(int i=0; i < TAMCli; i++) {
+    for(int i=0; i < TAM; i++) {
 
         printf("Cliente %d, Primeiro Nome: ", i+1);
         scanf("%s", c[i].nome );
-        printf("CPF: ");
-        scanf("%i", &c[i].cpf );
 
-        do{
-        if(validarCPF(c[i].cpf)){
-            printf("CPF Inválido!");
-        }
-        }
-        while(validarCPF(c[i].cpf) != 1);
+        do {
+            printf("CPF: ");
+            scanf("%s", c[i].cpf);
+
+            if (!validarCPF(c[i].cpf)) {
+                printf("CPF inválido!\n\n");
+            }
+        } while (!validarCPF(c[i].cpf));
+        printf("\n");
+
     }
 }
 
 void realizarVendas(Venda v[]){
 
-    for(int i = 0; i < TAMCli; i++){
+    for(int i = 0; i < TAM; i++){
         printf("\nVenda %d", i + 1);
         printf("\nID Cliente: ");
-        scanf("%i", &v[i].idCliente);
+        scanf("%i", &v[i].cpfCliente);
         printf("\nID Produto: ");
         scanf("%d", &v[i].idProduto);
         printf("\nQuantidade Vendida: ");
@@ -87,7 +88,7 @@ void consultarVendas(Venda v[]){
 
     for (int i = 0; i < vendasfeita; i++) {
         printf("\nVenda %d", i + 1);
-        printf("\nID Cliente: %d", v[i].idCliente);
+        printf("\nID Cliente: %d", v[i].cpfCliente);
         printf("\nID Produto: %d", v[i].idProduto);
         printf("\nQuantidade Vendida: %d", v[i].quantProduto);
         printf("\nValor Total: %.2f", v[i].valorTotal);
@@ -96,7 +97,7 @@ void consultarVendas(Venda v[]){
 
 void cadastrarProduto (Produto p[]) {
 
-    for(int i=0; i < TAMProd; i++) {
+    for(int i=0; i < TAM; i++) {
         printf("\nPrimeiro Nome do Produto %d: ", i+1);
         scanf("%s", p[i].nome );
 
@@ -112,9 +113,10 @@ void cadastrarProduto (Produto p[]) {
 
 void consultarCliente (Cliente *c) {
 
-    for(int i=0; i < TAMCli; i++) {
-        printf("\nCPF Cliente: %d.",  c[i].cpf);
+    for(int i=0; i < TAM; i++) {
         printf("\nPrimeiro Nome: %s.",  c[i].nome);
+        printf("\nCPF Cliente: %d.",  c[i].cpf);
+        printf("\n");
     }
 
     printf("\n\n");
@@ -122,7 +124,7 @@ void consultarCliente (Cliente *c) {
 
 void consultarProduto (Produto p[]) {
 
-    for(int i=0; i < TAMProd; i++) {
+    for(int i=0; i < TAM; i++) {
         printf("\nId Produto: %d.",  p[i].id);
         printf("\nNome Produto: %s.", p[i].nome);
         printf("\nQuantidade: %d.", p[i].quantidade);
