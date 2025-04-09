@@ -31,7 +31,6 @@ typedef struct {
 }Venda;
 
 
-
 void cadastrarCliente (Cliente c[]) {
 
     for(int i=0; i < TAMCli; i++) {
@@ -43,23 +42,35 @@ void cadastrarCliente (Cliente c[]) {
     }
 }
 
-void realizarVenda(Venda v[]){
+void realizarVendas(Venda v[]){
 
     for(int i = 0; i < TAMCli; i++){
-        printf("\nProduto: ");
-        scanf("%i", &v[i].idProduto);
-        printf("Quantidade: ");
-        scanf("%i", &v[i].quantProduto);
-
-        v[i].quantProduto = (v[i].idProduto * v[i].quantProduto);
+        printf("\nVenda %d", i + 1);
+        printf("\nID Cliente: ");
+        scanf("%i", &v[i].idCliente);
+        printf("\nID Produto: ");
+        scanf("%d", &v[i].idProduto);
+        printf("\nQuantidade Vendida: ");
+        scanf("%d", &v[i].quantProduto);
+        printf("\nValor Total: ");
+        scanf("%.2f", &v[i].valorTotal);
     }
 }
 
-void consultarVenda(Venda v[]){
-    for(int i = 0; i < TAMCli; i++){
-        printf("\nProduto: %i", v[i].idProduto);
-        printf("Quantidade: %i", v[i].quantProduto);
-        printf("Valor da Venda: %f", v[i].valorTotal);
+void consultarVendas(Venda v[]){
+    int vendasfeita;
+
+    if (vendasfeita == 0) {
+        printf("\nNenhuma venda realizada ainda.\n");
+        return;
+    }
+
+    for (int i = 0; i < vendasfeita; i++) {
+        printf("\nVenda %d", i + 1);
+        printf("\nID Cliente: %d", v[i].idCliente);
+        printf("\nID Produto: %d", v[i].idProduto);
+        printf("\nQuantidade Vendida: %d", v[i].quantProduto);
+        printf("\nValor Total: %.2f", v[i].valorTotal);
     }
 }
 
@@ -104,9 +115,8 @@ void consultarProduto (Produto p[]) {
 
 
 
-
-
 int main() {
+    setlocale(LC_ALL, "portuguese_Brazil");
 
     int opcao, sair=0; // sair inicialmente falso
     Cliente clientes[5];
@@ -114,7 +124,7 @@ int main() {
     Venda vendas[5];
 
     do {
-        printf("\n\n>>>> Sistema de Vendas <<<< ");
+        printf("\n\t>>>> Sistema de Vendas <<<< ");
         printf("\n\t1 - Cadastrar Clientes");
         printf("\n\t2 - Cadastrar Produtos");
         printf("\n\t3 - Consultar Clientes");
@@ -125,33 +135,34 @@ int main() {
 
         scanf("%d", &opcao);
 
-        if ( opcao == 1) {
-            cadastrarCliente(&clientes);
-
-        } else if ( opcao == 2 ) {
-            cadastrarProduto(&produtos);
-
-        } else if ( opcao == 3 ) {
-            consultarCliente(&clientes);
-
-        } else if ( opcao == 4 ) {
-            consultarProduto(&produtos);
-
-        } else if ( opcao == 5 ) {
-            realizarVenda(&vendas);
-
-        } else if ( opcao == 6 ) {
-            consultarVenda(&vendas);
-
-        } else if ( opcao == 7 ) {
-            sair = 1;
-
-        } else {
-            printf("\n\nOpcao Invalida!");
+        switch(opcao){
+            case 1:
+                cadastrarCliente(&clientes);
+                break;
+            case 2:
+                cadastrarProduto(&produtos);
+                break;
+            case 3:
+                consultarCliente(&clientes);
+                break;
+            case 4:
+                consultarProduto(&produtos);
+                break;
+            case 5:
+                realizarVendas(&vendas);
+                break;
+            case 6:
+                consultarVendas(&vendas);
+                break;
+            case 7:
+                sair = 1;
+                break;
+            default:
+                printf("\n\nOpcao Invalida!");
 
         }
 
-    } while ( sair != 1 );
+    } while (!sair);
 
     return 0;
 }
