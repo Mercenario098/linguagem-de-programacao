@@ -79,7 +79,7 @@ void realizarVendas(Venda v[]){
 }
 
 void consultarVendas(Venda v[]){
-    int vendasfeita;
+    int vendasfeita = 0;
 
     if (vendasfeita == 0) {
         printf("\nNenhuma venda realizada ainda.\n");
