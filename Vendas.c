@@ -3,8 +3,8 @@
 #include <locale.h>
 #include <string.h>
 #include <ctype.h>
-#define TAM 4
 
+#define TAM 4
 
 typedef struct {
 
@@ -22,7 +22,7 @@ typedef struct {
 
 typedef struct {
 
-    int cpfCliente;
+    char cpfCliente;
     int idProduto;
     int quantProduto;
     float valorTotal;
@@ -41,6 +41,16 @@ int validarCPF(const char *cpf) {
     }
 
     return 1;
+}
+
+int cpfJaCadastrado(Cliente c[], int total, char cpf[]) {
+    for (int i = 0; i < total; i++) {
+        if (strcmp(c[i].cpf, cpf) == 0) {
+            printf("\nCPF já cadastrado para o cliente: %s\n", c[i].nome);
+            return 1;
+        }
+    }
+    return 0;
 }
 
 void cadastrarCliente (Cliente c[]) {
@@ -63,23 +73,58 @@ void cadastrarCliente (Cliente c[]) {
     }
 }
 
-void realizarVendas(Venda v[]){
-
-    for(int i = 0; i < TAM; i++){
-        printf("\nVenda %d", i + 1);
-        printf("\nID Cliente: ");
-        scanf("%i", &v[i].cpfCliente);
-        printf("\nID Produto: ");
-        scanf("%d", &v[i].idProduto);
-        printf("\nQuantidade Vendida: ");
-        scanf("%d", &v[i].quantProduto);
-        printf("\nValor Total: ");
-        scanf("%.2f", &v[i].valorTotal);
+int realizarVendas(Venda v[], int vendasFeitas, Cliente clientes[], Produto produtos[]) {
+    if (vendasFeitas >= TAM) {
+        printf("\nLimite de vendas atingido.\n");
+        return vendasFeitas;
     }
+
+    printf("\nVenda %d", vendasFeitas + 1);
+    printf("\nCPF do Cliente: ");
+    scanf("%s", v[vendasFeitas].cpfCliente);
+
+    int clienteEncontrado = 0;
+    for (int i = 0; i < TAM; i++) {
+        if (strcmp(clientes[i].cpf, v[vendasFeitas].cpfCliente) == 0) {
+            clienteEncontrado = 1;
+            break;
+        }
+    }
+
+    if (!clienteEncontrado) {
+        printf("Cliente não encontrado!\n");
+        return vendasFeitas;
+    }
+
+    printf("ID do Produto: ");
+    scanf("%d", &v[vendasFeitas].idProduto);
+
+    int idProduto = v[vendasFeitas].idProduto;
+    if (idProduto < 1 || idProduto > TAM) {
+        printf("Produto inválido!\n");
+        return vendasFeitas;
+    }
+
+    printf("Quantidade vendida: ");
+    scanf("%d", &v[vendasFeitas].quantProduto);
+
+    int qtdVendida = v[vendasFeitas].quantProduto;
+    if (qtdVendida > produtos[idProduto - 1].quantidade) {
+        printf("Estoque insuficiente!\n");
+        return vendasFeitas;
+    }
+
+    produtos[idProduto - 1].quantidade -= qtdVendida;
+    v[vendasFeitas].valorTotal = produtos[idProduto - 1].valor * qtdVendida;
+
+    printf("Venda realizada com sucesso!\n");
+
+    return vendasFeitas + 1;
 }
 
+
 void consultarVendas(Venda v[]){
-    int vendasfeita;
+    int vendasfeita = 0;
 
     if (vendasfeita == 0) {
         printf("\nNenhuma venda realizada ainda.\n");
@@ -88,10 +133,11 @@ void consultarVendas(Venda v[]){
 
     for (int i = 0; i < vendasfeita; i++) {
         printf("\nVenda %d", i + 1);
-        printf("\nID Cliente: %d", v[i].cpfCliente);
-        printf("\nID Produto: %d", v[i].idProduto);
+        printf("\nCPF do Cliente: %s", v[i].cpfCliente);
+        printf("\nID do Produto: %d", v[i].idProduto);
         printf("\nQuantidade Vendida: %d", v[i].quantProduto);
         printf("\nValor Total: %.2f", v[i].valorTotal);
+        printf("\n\n");
     }
 }
 
@@ -141,9 +187,9 @@ int main() {
     setlocale(LC_ALL, "portuguese_Brazil");
 
     int opcao, sair=0; // sair inicialmente falso
-    Cliente clientes[5];
-    Produto produtos[5];
-    Venda vendas[5];
+    Cliente clientes[TAM];
+    Produto produtos[TAM];
+    Venda vendas[TAM];
 
     do {
         printf("\n\t>>>> Sistema de Vendas <<<< ");
