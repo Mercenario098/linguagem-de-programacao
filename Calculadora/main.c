@@ -24,41 +24,98 @@ float dividir(int valor1, int valor2){
     }
 }
 
+float potenciacao(int valor){
+    if()
+}
+
+float raizQuadrada(int valor){
+    if()
+}
+
+float modulo(int valor){
+    if()
+}
 int main(){
     setlocale(LC_ALL,"Portuguese_Brazil");
 
-    float numero1, numero2, resultado;
-    int opcao, continuar = 1;
+    float numero1 = 0, numero2 = 0, resultado = 0;
+    int opcao = 0, sair = 0;
 
     do{
-        printf("\nValor 1: ");
-        scanf("%f", &numero1);
-        printf("\nValor 2: ");
-        scanf("%f", &numero2);
-
-        printf("\nOpções:");
-        printf("\n1 - Somar");
-        printf("\n2 - Subitrair");
-        printf("\n3 - multiplicar");
-        printf("\n4 - dividir");
-        printf("\n5 - Sair");
-        printf("\nEscolha uma das opções: ");
+        printf("\n\t>>>>Calculadora<<<<");
+        printf("\n\t>>>>Opções<<<<");
+        printf("\n\t1 - Somar");
+        printf("\n\t2 - Subitrair");
+        printf("\n\t3 - multiplicar");
+        printf("\n\t4 - dividir");
+        printf("\n\t5 - Potenciação");
+        printf("\n\t6 - Raiz Quadrada");
+        printf("\n\t7 - Modulo");
+        printf("\n\t8 - Sair");
+        printf("\n\t>>>> ");
         scanf("%d", &opcao);
+
         switch(opcao){
         case 1:
+            printf("\n\tValor 1: ");
+            scanf("%f", &numero1);
+            printf("\n\tValor 2: ");
+            scanf("%f", &numero2);
             resultado = somar(numero1, numero2);
-        case 2:
-            resultado = subtrair(numero1, numero2);
-        case 3:
-            resultado = multiplicar(numero1, numero2);
-        case 4:
-            resultado = dividir(numero1, numero2);
-        case 5:
             break;
+
+        case 2:
+            printf("\n\tValor 1: ");
+            scanf("%f", &numero1);
+            printf("\n\tValor 2: ");
+            scanf("%f", &numero2);
+            resultado = subtrair(numero1, numero2);
+            break;
+
+        case 3:
+            printf("\n\tValor 1: ");
+            scanf("%f", &numero1);
+            printf("\n\tValor 2: ");
+            scanf("%f", &numero2);
+            resultado = multiplicar(numero1, numero2);
+            break;
+
+        case 4:
+            printf("\n\tValor 1: ");
+            scanf("%f", &numero1);
+            printf("\n\tValor 2: ");
+            scanf("%f", &numero2);
+            resultado = dividir(numero1, numero2);
+            break;
+
+        case 5:
+            resultado = potenciacao();
+            break;
+
+        case 6:
+            printf("Valor: ");
+            scanf("%f", &numero1);
+            resultado = raizQuadrada(numero1);
+            break;
+
+        case 7:
+            printf("Valor: ");
+            scanf("%f", &numero1);
+            resultado = modulo(numero1);
+            break;
+
+        case 8:
+            sair = 1;
+            break;
+
+        default:
+            printf("\n\tOpção Invalida!\n");
         }
-        printf("Resulta = %.2f", resultado);
-    }
-    while(continuar == 1);
+
+        printf("\n\tResulta = %.2f", resultado);
+        printf("\n\n");
+
+    }while(!sair);
 
 
     return 0;
