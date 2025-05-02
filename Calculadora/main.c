@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <math.h>
 
 float somar(int valor1, int valor2){
     return(valor1 + valor2);
@@ -24,16 +25,16 @@ float dividir(int valor1, int valor2){
     }
 }
 
-float potenciacao(int valor){
-    if()
+float potenciacao(float valor1, float valor2){
+    return(pow(valor1,valor2));
 }
 
-float raizQuadrada(int valor){
-    if()
+float raizQuadrada(float valor){
+    return(sqrt(valor));
 }
 
 float modulo(int valor){
-    if()
+    return(abs(valor));
 }
 int main(){
     setlocale(LC_ALL,"Portuguese_Brazil");
@@ -43,7 +44,6 @@ int main(){
 
     do{
         printf("\n\t>>>>Calculadora<<<<");
-        printf("\n\t>>>>Opções<<<<");
         printf("\n\t1 - Somar");
         printf("\n\t2 - Subitrair");
         printf("\n\t3 - multiplicar");
@@ -89,17 +89,21 @@ int main(){
             break;
 
         case 5:
-            resultado = potenciacao();
+            printf("\n\tBase: ");
+            scanf("%f", &numero1);
+            printf("\n\tExpoente: ");
+            scanf("%f", &numero2);
+            resultado = potenciacao(numero1,numero2);
             break;
 
         case 6:
-            printf("Valor: ");
+            printf("\n\tQual a Raiz Quadrada: ");
             scanf("%f", &numero1);
             resultado = raizQuadrada(numero1);
             break;
 
         case 7:
-            printf("Valor: ");
+            printf("\n\tQual o Moludo: ");
             scanf("%f", &numero1);
             resultado = modulo(numero1);
             break;
@@ -112,7 +116,7 @@ int main(){
             printf("\n\tOpção Invalida!\n");
         }
 
-        printf("\n\tResulta = %.2f", resultado);
+        printf("\n\tResultado = %.2f", resultado);
         printf("\n\n");
 
     }while(!sair);
