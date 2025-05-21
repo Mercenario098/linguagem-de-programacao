@@ -6,7 +6,7 @@
 int main(){
     setlocale(LC_ALL, "Portuguese_Brazil");
 
-    int size = 10;
+    int size = 3;
     int k = INT_MIN;
     int array[size];
 

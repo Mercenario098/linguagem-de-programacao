@@ -1,54 +1,58 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 #include <locale.h>
-#include <stralign.h>
-#define FINAL_CARACTER \0
 
-void clearString( char *str);
-char isPalindrome( char *str);
+#define FINAL_CARACTER '\0'
 
+void clearString(char *str);
+int isPalindrome(char *str);
 
-int main(){
-    setlocale(LC_ALL, "Portuguese_Brasil");
+int main() {
+    setlocale(LC_ALL, "Portuguese");
 
     char input[1000];
 
     printf("Digite a palavra ou frase: ");
-    scanf("%[^\n}", input);
+    scanf(" %[^\n]", input);
 
     clearString(input);
 
-    printf("\n%s", input);
+    printf("\nTexto: %s", input);
 
+    if (isPalindrome(input)) {
+        printf("\nÉ um palíndromo.\n");
+    } else {
+        printf("\nNão é um palíndromo.\n");
+    }
 
     return 0;
 }
 
-void clearString( char *str){
+void clearString(char *str) {
     int j = 0;
-
-    for(int i = 0; str[i] != FINAL_CARACTER; i++){
-        if(isalnum(str[i])){
-            str[j] = str[i];
-            j++;
+    for (int i = 0; str[i] != FINAL_CARACTER; i++) {
+        if (isalnum((unsigned char)str[i])) {
+            str[j++] = tolower((unsigned char)str[i]);
         }
     }
     str[j] = FINAL_CARACTER;
 }
 
-char* isPalindrome( char *str){
-    int lastPosition = (strlen(str)-1);
-    int left = ZERO, right = lastPosition;
+int isPalindrome(char *str) {
+    int left = 0, right = strlen(str) - 1;
 
-    while(left < right){
-        if(str[left] != str[right]){
-        return 'Nâo'
+    while (left < right) {
+        if (str[left] != str[right]) {
+            return 0;
         }
         left++;
-        right++;
+        right--;
     }
-
+    return 1;
 }
+
 
 /*void clearString( char *str){
     int j = 0;
