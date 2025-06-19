@@ -3,7 +3,8 @@
 #include <locale.h>
 #include <string.h>
 #include <ctype.h>
-#define TAM 2
+
+#define TAM 4
 
 typedef struct {
     int id;
@@ -25,72 +26,89 @@ typedef struct {
 } Venda;
 
 int validarCPF(const char *cpf) {
-    if (strlen(cpf) != 11) {
-        return 0;
-    }
+    if (strlen(cpf) != 11) return 0;
     for (int i = 0; i < 11; i++) {
-        if (!isdigit(cpf[i])) {
-            return 0;
-        }
+        if (!isdigit(cpf[i])) return 0;
     }
     return 1;
 }
 
-void exibirNotaFiscal(Cliente clientes[], Produto produtos[], int idCliente, int idProduto, int quantidade, float valorTotal, int *totalVendas) {
-    printf("\n========== NOTA FISCAL ==========\n");
-    printf("Cliente: %s\n", clientes[idCliente].nome);
-    printf("CPF: %s\n", clientes[idCliente].cpf);
-    printf("Produto: %s\n", produtos[idProduto].nome);
-    printf("Quantidade: %d\n", quantidade);
-    printf("Valor Unitario: R$ %.2f\n", produtos[idProduto].valor);
-    printf("Valor Total: R$ %.2f\n", valorTotal);
-    printf("=================================\n");
-    printf("Obrigado pela preferencia, volte sempre!\n");
-
-    (*totalVendas)++;
+int cpfJaCadastrado(Cliente c[], int total, char cpf[]) {
+    for (int i = 0; i < total; i++) {
+        if (strcmp(c[i].cpf, cpf) == 0) {
+            printf("\nCPF já cadastrado para o cliente: %s\n", c[i].nome);
+            return 1;
+        }
+    }
+    return 0;
 }
 
-void cadastrarCliente(Cliente c[]) {
-    for (int i = 0; i < TAM; i++) {
-        printf("Cliente %d, Primeiro Nome: ", i + 1);
+void cadastrarCliente(Cliente c[], int *totalClientes) {
+    for (int i = *totalClientes; i < TAM; i++) {
+        printf("\nCliente %d, Primeiro Nome: ", i + 1);
         scanf("%s", c[i].nome);
+
         do {
             printf("CPF: ");
             scanf("%s", c[i].cpf);
+
             if (!validarCPF(c[i].cpf)) {
-                printf("CPF invalido!\n\n");
+                printf("CPF inválido!\n\n");
+            } else if (cpfJaCadastrado(c, *totalClientes, c[i].cpf)) {
+                printf("Digite outro CPF.\n");
+                strcpy(c[i].cpf, ""); // Limpa para refazer
             }
-        } while (!validarCPF(c[i].cpf));
-        printf("\n");
+        } while (!validarCPF(c[i].cpf) || cpfJaCadastrado(c, *totalClientes, c[i].cpf));
+
+        (*totalClientes)++;
     }
 }
 
-int realizarVendas(Venda v[], int vendasFeitas, Cliente clientes[], Produto produtos[]) {
+void cadastrarProduto(Produto p[], int *totalProdutos) {
+    for (int i = *totalProdutos; i < TAM; i++) {
+        printf("\nPrimeiro Nome do Produto %d: ", i + 1);
+        scanf("%s", p[i].nome);
+
+        printf("Quantidade: ");
+        scanf("%d", &p[i].quantidade);
+
+        printf("Valor: ");
+        scanf("%f", &p[i].valor);
+
+        p[i].id = i + 1;
+        (*totalProdutos)++;
+    }
+}
+
+int realizarVendas(Venda v[], int vendasFeitas, Cliente clientes[], int totalClientes, Produto produtos[], int totalProdutos) {
     if (vendasFeitas >= TAM) {
         printf("\nLimite de vendas atingido.\n");
         return vendasFeitas;
     }
+
     printf("\nVenda %d", vendasFeitas + 1);
     printf("\nCPF do Cliente: ");
     scanf("%s", v[vendasFeitas].cpfCliente);
 
-    int clienteEncontrado = -1;
-    for (int i = 0; i < TAM; i++) {
+    int clienteEncontrado = 0;
+    for (int i = 0; i < totalClientes; i++) {
         if (strcmp(clientes[i].cpf, v[vendasFeitas].cpfCliente) == 0) {
-            clienteEncontrado = i;
+            clienteEncontrado = 1;
             break;
         }
     }
-    if (clienteEncontrado == -1) {
-        printf("Cliente nao encontrado!\n");
+
+    if (!clienteEncontrado) {
+        printf("Cliente não encontrado!\n");
         return vendasFeitas;
     }
 
     printf("ID do Produto: ");
     scanf("%d", &v[vendasFeitas].idProduto);
-    int idProduto = v[vendasFeitas].idProduto - 1;
-    if (idProduto < 0 || idProduto >= TAM) {
-        printf("Produto invalido!\n");
+
+    int idProduto = v[vendasFeitas].idProduto;
+    if (idProduto < 1 || idProduto > totalProdutos) {
+        printf("Produto inválido!\n");
         return vendasFeitas;
     }
 
@@ -98,17 +116,17 @@ int realizarVendas(Venda v[], int vendasFeitas, Cliente clientes[], Produto prod
     scanf("%d", &v[vendasFeitas].quantProduto);
 
     int qtdVendida = v[vendasFeitas].quantProduto;
-    if (qtdVendida > produtos[idProduto].quantidade) {
+    if (qtdVendida > produtos[idProduto - 1].quantidade) {
         printf("Estoque insuficiente!\n");
         return vendasFeitas;
     }
 
-    produtos[idProduto].quantidade -= qtdVendida;
-    v[vendasFeitas].valorTotal = produtos[idProduto].valor * qtdVendida;
+    produtos[idProduto - 1].quantidade -= qtdVendida;
+    v[vendasFeitas].valorTotal = produtos[idProduto - 1].valor * qtdVendida;
 
-    exibirNotaFiscal(clientes, produtos, clienteEncontrado, idProduto, qtdVendida, v[vendasFeitas].valorTotal, &vendasFeitas);
+    printf("Venda realizada com sucesso!\n");
 
-    return vendasFeitas;
+    return vendasFeitas + 1;
 }
 
 void consultarVendas(Venda v[], int vendasFeitas) {
@@ -123,49 +141,37 @@ void consultarVendas(Venda v[], int vendasFeitas) {
         printf("\nID do Produto: %d", v[i].idProduto);
         printf("\nQuantidade Vendida: %d", v[i].quantProduto);
         printf("\nValor Total: %.2f", v[i].valorTotal);
-        printf("\n\n");
+        printf("\n-----------------------------------\n");
     }
 }
 
-void cadastrarProduto(Produto p[]) {
-    for (int i = 0; i < TAM; i++) {
-        printf("\nPrimeiro Nome do Produto %d: ", i + 1);
-        scanf("%s", p[i].nome);
-        printf("Quantidade: ");
-        scanf("%d", &p[i].quantidade);
-        printf("Valor: ");
-        scanf("%f", &p[i].valor);
-        p[i].id = i + 1;
+void consultarCliente(Cliente c[], int totalClientes) {
+    for (int i = 0; i < totalClientes; i++) {
+        printf("\nPrimeiro Nome: %s", c[i].nome);
+        printf("\nCPF Cliente: %s\n", c[i].cpf);
     }
+    printf("\n");
 }
 
-void consultarCliente(Cliente c[]) {
-    for (int i = 0; i < TAM; i++) {
-        printf("\nPrimeiro Nome: %s.", c[i].nome);
-        printf("\nCPF Cliente: %s.", c[i].cpf);
-        printf("\n");
-    }
-    printf("\n\n");
-}
-
-void consultarProduto(Produto p[]) {
-    for (int i = 0; i < TAM; i++) {
-        printf("\nId Produto: %d.", p[i].id);
-        printf("\nNome Produto: %s.", p[i].nome);
-        printf("\nQuantidade: %d.", p[i].quantidade);
-        printf("\nValor: %.2f.", p[i].valor);
+void consultarProduto(Produto p[], int totalProdutos) {
+    for (int i = 0; i < totalProdutos; i++) {
+        printf("\nId Produto: %d", p[i].id);
+        printf("\nNome Produto: %s", p[i].nome);
+        printf("\nQuantidade: %d", p[i].quantidade);
+        printf("\nValor: %.2f", p[i].valor);
         printf("\n----------------------------------");
     }
-    printf("\n\n");
+    printf("\n");
 }
 
 int main() {
-    setlocale(LC_ALL, "portuguese_Brazil");
+    setlocale(LC_ALL, "Portuguese");
 
-    int opcao = 0, vendasFeitas = 0, sair = 0;
+    int opcao, sair = 0;
     Cliente clientes[TAM];
     Produto produtos[TAM];
     Venda vendas[TAM];
+    int totalClientes = 0, totalProdutos = 0, vendasFeitas = 0;
 
     do {
         printf("\n\t>>>> Sistema de Vendas <<<< ");
@@ -180,19 +186,19 @@ int main() {
 
         switch (opcao) {
             case 1:
-                cadastrarCliente(clientes);
+                cadastrarCliente(clientes, &totalClientes);
                 break;
             case 2:
-                cadastrarProduto(produtos);
+                cadastrarProduto(produtos, &totalProdutos);
                 break;
             case 3:
-                consultarCliente(clientes);
+                consultarCliente(clientes, totalClientes);
                 break;
             case 4:
-                consultarProduto(produtos);
+                consultarProduto(produtos, totalProdutos);
                 break;
             case 5:
-                vendasFeitas = realizarVendas(vendas, vendasFeitas, clientes, produtos);
+                vendasFeitas = realizarVendas(vendas, vendasFeitas, clientes, totalClientes, produtos, totalProdutos);
                 break;
             case 6:
                 consultarVendas(vendas, vendasFeitas);
@@ -201,9 +207,8 @@ int main() {
                 sair = 1;
                 break;
             default:
-                printf("\n\nOpcao Invalida!");
+                printf("\n\nOpção Inválida!");
         }
-
     } while (!sair);
 
     return 0;
