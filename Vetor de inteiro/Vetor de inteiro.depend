@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1746314990 source:c:\users\lucas\onedrive\documentos\code blocks\vetor de inteiro\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+

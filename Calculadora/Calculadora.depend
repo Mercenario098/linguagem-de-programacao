@@ -1,5 +1,9 @@
 # depslib dependency file v1.0
+<<<<<<< HEAD
 1746057182 source:c:\users\lucas caldas\documents\github\linguagem-de-programacao\calculadora\main.c
+=======
+1740947601 source:c:\users\lucas\onedrive\documentos\code blocks\calculadora\main.c
+>>>>>>> 9b6146b6e88c404f949d8d444d52d3c7b3d4bcbc
 	<stdio.h>
 	<stdlib.h>
 	<locale.h>

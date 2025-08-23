@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1741576990 source:c:\users\lucas\onedrive\documentos\code blocks\eprestimo bancario\main.c
+	<stdio.h>
+	<stdlib.h>
+	<locale.h>
+
