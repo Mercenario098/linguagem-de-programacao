@@ -1,6 +1,0 @@
-# depslib dependency file v1.0
-1743457793 source:c:\users\lucas caldas\documents\github\linguagem-de-programacao\palidromo\main.c
-	<stdio.h>
-	<stdlib.h>
-	<locale.h>
-
