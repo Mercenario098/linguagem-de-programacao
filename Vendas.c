@@ -4,7 +4,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#define TAM 10
+#define TAM 2
 
 typedef struct {
     int id;

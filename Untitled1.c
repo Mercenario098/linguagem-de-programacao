@@ -1,9 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <locale.h>
-#include <string.h>
-#include <ctype.h>
 
+<<<<<<< HEAD
+=======
 #define TAM 4
 
 typedef struct {
@@ -213,3 +210,4 @@ int main() {
 
     return 0;
 }
+>>>>>>> 9b6146b6e88c404f949d8d444d52d3c7b3d4bcbc
