@@ -2,99 +2,61 @@
 #include <stdlib.h>
 #include <locale.h>
 
-<<<<<<< HEAD
-float operacoesbasicas(){
-    float a = 0, b = 0, resultado = 0;
-
-    if( resultado = 1){
-
-    }
-
-}
-
-int main(){
+int main() {
     setlocale(LC_ALL, "Portuguese_Brazil");
-    float a = 0, b = 0, resultado = 0;
-    int opcao, sair = 0;
 
+    float a = 0, b = 0, resultado = 0;
+    int opcao;
+    int sair = 0;
 
     do {
-        printf("\n\t>>>>Calculadora<<<<");
+        printf("\n\t\t>>>> Calculadora <<<<\n");
         printf("\n\t1 - Soma");
         printf("\n\t2 - Subtração");
         printf("\n\t3 - Multiplicação");
         printf("\n\t4 - Divisão");
         printf("\n\t5 - Sair");
-        printf("\n\t>>>> ");
+        printf("\n\n\t>>>> ");
         scanf("%d", &opcao);
 
-        switch(opcao){
+        if (opcao >= 1 && opcao <= 4) {
+            printf("\nValor 1: ");
+            scanf("%f", &a);
+            printf("Valor 2: ");
+            scanf("%f", &b);
+        }
+
+        switch (opcao) {
             case 1:
-                printf("Valor 1: ");
-                scanf("%d", &a);
-                printf("\nValor 2: ");
-                scanf("%d", &b);
-
                 resultado = a + b;
-                printf("\nA soma é: %f", resultado);
-
-                printf("\n\n");
+                printf("\nResultado da soma: %.2f\n", resultado);
                 break;
             case 2:
-                printf("Valor 1: ");
-                scanf("%d", &a);
-                printf("\nValor 2: ");
-                scanf("%d", &b);
-
                 resultado = a - b;
-                printf("\nA soma é: %f", resultado);
-
-                printf("\n\n");
+                printf("\nResultado da subtração: %.2f\n", resultado);
                 break;
-
             case 3:
-                printf("Valor 1: ");
-                scanf("%d", &a);
-                printf("\nValor 2: ");
-                scanf("%d", &b);
-
                 resultado = a * b;
-                printf("\nA soma é: %f", resultado);
-
-                printf("\n\n");
+                printf("\nResultado da multiplicação: %.2f\n", resultado);
                 break;
-
             case 4:
-                printf("Valor 1: ");
-                scanf("%d", &a);
-                printf("\nValor 2: ");
-                scanf("%d", &b);
-
-                resultado = a / b;
-                printf("\nA soma é: %f", resultado);
-
-                printf("\n\n");
+                if (b != 0)
+                    resultado = a / b;
+                else {
+                    printf("\nErro: divisão por zero!\n");
+                    break;
+                }
+                printf("\nResultado da divisão: %.2f\n", resultado);
                 break;
-
             case 5:
                 sair = 1;
+                printf("\nSaindo da calculadora...\n");
                 break;
-
             default:
-                printf("Opção Invalida!");
-            }
+                printf("\nOpção inválida!\n");
+        }
 
-        }while(!sair);
-=======
-int main()
-{
-    setlocale(LC_ALL, "Portuguese_Brazil");
->>>>>>> 9b6146b6e88c404f949d8d444d52d3c7b3d4bcbc
+    } while (!sair);
 
-    float a = 0, b = 0, escholha = 0;
-
-    printf("Calculado Simplis\n");
-    scanf("%f", &a);
-    scanf("%f", &b);
     return 0;
 }
