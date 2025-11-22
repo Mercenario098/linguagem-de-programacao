@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <locale.h>
 
-<<<<<<< HEAD
 float operacoesbasicas(){
     float a = 0, b = 0, resultado = 0;
 
@@ -85,16 +84,6 @@ int main(){
             }
 
         }while(!sair);
-=======
-int main()
-{
-    setlocale(LC_ALL, "Portuguese_Brazil");
->>>>>>> 9b6146b6e88c404f949d8d444d52d3c7b3d4bcbc
 
-    float a = 0, b = 0, escholha = 0;
-
-    printf("Calculado Simplis\n");
-    scanf("%f", &a);
-    scanf("%f", &b);
     return 0;
 }
