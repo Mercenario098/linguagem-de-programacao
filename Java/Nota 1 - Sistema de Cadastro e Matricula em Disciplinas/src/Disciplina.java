@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Disciplina {
     private String codigo;
@@ -11,10 +12,11 @@ public class Disciplina {
         this.codigo = codigo;
         this.titulo = titulo;
         this.capacidadeMaxima = capacidadeMaxima;
+        this.inscritos = new ArrayList<>();
     }
 
     boolean isLotada() { //verifica se a disciplina atingiu sua capacidade máxima;
-
+        return inscritos.size() >= capacidadeMaxima;
     }
     //List<Aluno> getAlunos() { //retorna todos os alunos inscritos;}
 
@@ -22,24 +24,12 @@ public class Disciplina {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
-
     public String getTitulo() {
         return titulo;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
     public int getCapacidadeMaxima() {
         return capacidadeMaxima;
-    }
-
-    public void setCapacidadeMaxima(int capacidadeMaxima) {
-        this.capacidadeMaxima = capacidadeMaxima;
     }
 
     public List<Aluno> getInscritos() {

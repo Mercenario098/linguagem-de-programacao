@@ -3,8 +3,8 @@ import java.util.List;
 
 public class Matriculador {
 
-    private List<Disciplina> ofertas;
-    private List<Aluno> alunos;
+    private List<Disciplina> ofertas = new ArrayList<>();
+    private List<Aluno> alunos = new ArrayList<>();
 
     public Matriculador(){
 
