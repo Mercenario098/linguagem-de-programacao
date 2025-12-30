@@ -2,12 +2,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Matriculador {
+    Disciplina disciplina;
 
-    private List<Disciplina> ofertas = new ArrayList<>();
-    private List<Aluno> alunos = new ArrayList<>();
+    private List<Disciplina> ofertas = new ArrayList<>(Disciplina);
+    private List<Aluno> alunos = new ArrayList<>(Aluno);
 
     public Matriculador(){
-
+        ofertas =
     }
     void cadastrarDisciplina(Disciplina d) { //não deve aceitar valores null nem códigos duplicados;
 
