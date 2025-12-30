@@ -12,30 +12,37 @@ void main() {
         IO.println("\t3 - Listar Cliente");
         IO.println("\t4 - Listar Produto");
         IO.println("\t5 - Sair");
+
         option = leia.nextInt();
 
         switch (option) {
             case 1:
-                int id = Integer.parseInt(IO.readln("ID do Cliente: "));
-                String nome = IO.readln("Nome do Cliente: ");
+                int idCliente = Integer.parseInt(IO.readln("ID do Cliente: "));
+                String nomeCliente = IO.readln("Nome do Cliente: ");
                 String email = IO.readln("Email do Cliente: ");
-                Cliente cliente = new Cliente(id, nome, email);
+                IO.println("\n\n");
+
+                Cliente cliente = new Cliente(idCliente, nomeCliente, email);
+                gerenciador.CadastrarClientes(cliente);
                 break;
 
             case 2:
-                id = Integer.parseInt(IO.readln("ID do Produto: "));
-                nome = IO.readln("Nome do Produto: ");
+                int idProduto = Integer.parseInt(IO.readln("ID do Produto: "));
+                String nomeProduto = IO.readln("Nome do Produto: ");
                 int quantidade =  Integer.parseInt(IO.readln("Quantidade do Produto: "));
                 double preco = Double.parseDouble(IO.readln("Preco do Produto: "));
-                Produto produto = new Produto(nome, quantidade, preco, id);
+                IO.println("\n\n");
+
+                Produto produto = new Produto(nomeProduto, quantidade, preco, idProduto);
+                gerenciador.CadastrarProdutos(produto);
                 break;
 
             case 3:
-                
+                gerenciador.ListarClientes();
                 break;
 
             case 4:
-
+                gerenciador.ListarProdutos();
                 break;
 
             case 5:
